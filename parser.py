@@ -2,11 +2,16 @@
 import urllib.request
 import requests
 from bs4 import BeautifulSoup
+import tkinter as tk
+from tkinter import filedialog
+root = tk.Tk()
+root.withdraw()
+file_path =filedialog.askdirectory()
 def get_html(url):
    _html = ""
    resp = requests.get(url)
    if resp.status_code == 200:
-      _html = resp.text
+       _html = resp.text
    return _html
 def get_download_link(URL):
     download_links = []
@@ -48,9 +53,10 @@ num = int(input())
 page_url="http://daeam-h.gne.go.kr/daeam-h/na/ntt/selectNttInfo.do?nttSn="+"%d"%(page_nums[num-1])
 download_links = get_download_link(page_url)
 filenames = get_filename(page_url)
+print(file_path)
 for i , j in enumerate(download_links):
     download_link = "http://daeam-h.gne.go.kr"+j
-    urllib.request.urlretrieve(download_link,"C:\\Users\\JIHONGKIM\\Desktop\\파일\\"+"%s"%filenames[i])
+    urllib.request.urlretrieve(download_link,file_path+"/%s"%filenames[i])
 
 #subContent > div > div:nth-child(7) > div.board-text > table > tbody > tr:nth-child(1) > td.ta_l
 #req = requests.request('GET', 'http://daeam-h.gne.go.kr/daeam-h/na/ntt/selectNttInfo.do?nttSn=203428')
